@@ -28,13 +28,13 @@ public class PaybillTransaction {
     @Column(name = "transaction_code", nullable = false, unique = true, length = 10)
     private String transactionCode;
 
-    @Column(name = "business_number", nullable = false, length = 7)
+    @Column(name = "business_number", nullable = false, length = 12) // Increased length for safety
     private String businessNumber;
 
     @Column(name = "account_number", nullable = false, length = 30)
     private String accountNumber;
 
-    @Column(name = "recipient_name", nullable = false, length = 50)
+    @Column(name = "recipient_name", nullable = true, length = 50) // <-- Changed to nullable = true
     private String recipientName;
 
     @Column(name = "amount", nullable = false, precision = 15, scale = 2)

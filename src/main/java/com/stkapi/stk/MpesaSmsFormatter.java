@@ -14,7 +14,7 @@ public class MpesaSmsFormatter {
 
         return switch (payload.getType()) {
             case PAYBILL -> String.format(
-                    "%s Confirmed. %s sent to %s for account %s on %s. New M-PESA balance is %s. Transaction cost, Ksh0.00.",
+                    "%s Confirmed. %s sent to %s for account %s on %s. New M-PESA balance is %s. Transaction cost, Ksh0.00. Amount you can transact within the day is 499,878.00. See all your balances now http://saf.cx/kWQpy",
                     payload.getTransactionCode(),
                     formattedAmount,
                     payload.getRecipientOrMerchant(),

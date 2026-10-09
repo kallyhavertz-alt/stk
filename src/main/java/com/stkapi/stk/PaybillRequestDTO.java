@@ -13,15 +13,14 @@ import java.math.BigDecimal;
 public class PaybillRequestDTO {
 
     @NotBlank(message = "Business number is required")
-    @Pattern(regexp = "^\\d{5,7}$", message = "Business number must be 5 to 7 digits")
+    @Pattern(regexp = "^\\d{5,10}$", message = "Business number must be 5 to 10 digits")
     private String businessNumber;
 
     @NotBlank(message = "Account number is required")
     @Size(min = 1, max = 30, message = "Account number must be between 1 and 30 characters")
     private String accountNumber;
 
-    @NotBlank(message = "Recipient name is required")
-    @Size(min = 2, max = 50, message = "Recipient name must be between 2 and 50 characters")
+    @Size(max = 50, message = "Recipient name cannot exceed 50 characters")
     private String recipientName;
 
     @NotNull(message = "Amount is required")
