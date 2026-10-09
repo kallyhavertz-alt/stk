@@ -32,7 +32,11 @@ public class FirebaseConfig {
 
         if (jsonConfig != null && !jsonConfig.trim().isEmpty()) {
             log.info("Loading Firebase credentials from FIREBASE_CONFIG_JSON environment variable.");
-            serviceAccount = new ByteArrayInputStream(jsonConfig.getBytes(StandardCharsets.UTF_8));
+
+            // FIX: Convert escaped backslash-n string sequences into actual system newlines
+            String sanitizedJson = jsonConfig.trim().replace("\\n", "\n");
+
+            serviceAccount = new ByteArrayInputStream(sanitizedJson.getBytes(StandardCharsets.UTF_8));
         } else {
             log.info("Loading Firebase credentials from local classpath resource: " + firebaseConfigPath);
             serviceAccount = new ClassPathResource(firebaseConfigPath).getInputStream();
@@ -56,7 +60,6 @@ public class FirebaseConfig {
         return FirebaseMessaging.getInstance(firebaseApp);
     }
 }
-
 /*package com.stkapi.stk;
 
 import com.google.auth.oauth2.GoogleCredentials;
