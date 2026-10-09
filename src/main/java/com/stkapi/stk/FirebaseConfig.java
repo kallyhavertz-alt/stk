@@ -13,6 +13,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.logging.Logger;
 
 @Configuration
@@ -27,16 +28,24 @@ public class FirebaseConfig {
     public FirebaseApp initializeFirebase() throws IOException {
         InputStream serviceAccount;
 
-        // Check for Railway environment variable
-        String jsonConfig = System.getenv("FIREBASE_CONFIG_JSON");
+        String rawEnvConfig = System.getenv("FIREBASE_CONFIG_JSON");
 
-        if (jsonConfig != null && !jsonConfig.trim().isEmpty()) {
+        if (rawEnvConfig != null && !rawEnvConfig.trim().isEmpty()) {
             log.info("Loading Firebase credentials from FIREBASE_CONFIG_JSON environment variable.");
 
-            // FIX: Convert escaped backslash-n string sequences into actual system newlines
-            String sanitizedJson = jsonConfig.trim().replace("\\n", "\n");
+            String trimmed = rawEnvConfig.trim();
+            byte[] jsonBytes;
 
-            serviceAccount = new ByteArrayInputStream(sanitizedJson.getBytes(StandardCharsets.UTF_8));
+            // Automatically decode Base64 if it's not a raw JSON bracket
+            if (!trimmed.startsWith("{")) {
+                log.info("Decoding Base64 FIREBASE_CONFIG_JSON string.");
+                jsonBytes = Base64.getDecoder().decode(trimmed);
+            } else {
+                log.info("Reading raw JSON FIREBASE_CONFIG_JSON string.");
+                jsonBytes = trimmed.replace("\\n", "\n").getBytes(StandardCharsets.UTF_8);
+            }
+
+            serviceAccount = new ByteArrayInputStream(jsonBytes);
         } else {
             log.info("Loading Firebase credentials from local classpath resource: " + firebaseConfigPath);
             serviceAccount = new ClassPathResource(firebaseConfigPath).getInputStream();
