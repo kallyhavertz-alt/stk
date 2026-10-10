@@ -29,5 +29,9 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+# Firebase Secrets
+firebase-service-account(2).json
+
+
 ### VS Code ###
 .vscode/
