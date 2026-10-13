@@ -24,7 +24,7 @@ public class MpesaSmsFormatter {
             );
 
             case BUY_GOODS -> String.format(
-                    "%s Confirmed. %s paid to %s. on %s. New M-PESA balance is %s. Transaction cost, Ksh0.00.",
+                    "%s Confirmed. %s paid to %s. on %s. New M-PESA balance is %s. Transaction cost, Ksh0.00.Amount you can transact within the day is 499,878.00. See all your balances now http://saf.cx/kWQpy",
                     payload.getTransactionCode(),
                     formattedAmount,
                     payload.getRecipientOrMerchant(),
@@ -33,7 +33,7 @@ public class MpesaSmsFormatter {
             );
 
             case POCHI -> String.format(
-                    "%s Confirmed. %s sent to Pochi la Biashara %s - %s on %s. New M-PESA balance is %s. Transaction cost, Ksh0.00.",
+                    "%s Confirmed. %s sent to %s on %s. New M-PESA balance is %s. Transaction cost, Ksh0.00.Amount you can transact within the day is 499,878.00. See all your balances now http://saf.cx/kWQpy",
                     payload.getTransactionCode(),
                     formattedAmount,
                     payload.getIdentifier(),
